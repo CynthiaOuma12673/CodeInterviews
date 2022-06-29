@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load bootstrap4 %}
+{% block content%}
+{{block.super}}
+<div class="container mt-3 mb-2">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{message}}
+    </div>
+    {% endfor %}
+    {% endif %}
+    <a href="{% url 'new_quiz' %}" class="btn join black font-weight-bol btn-sm"><i class="fas fa-plus"></i> NEW QUESTION</a>
+    {% for quiz in quizs %}
+    <div class="quiz-cont p-2 card mt-3" >
+        <div class="row">
+            <div class="col-md-4">
+                <img class="quiz-logo" src="{{quiz.quiz_logo.url}}" alt=" " height="200" width="320">
+            </div>
+            <div class="col-md-3">
+                <h4 class="card-title">{{quiz.name|title}}</h4>
+                <p>{{quiz.question}}</p>
+            </div>
+            <div class="col-md-3">
+                
+            </div>
+            <div class="col-md-2 pt-3 pl-5">
+                {% if request.user.profile.question == quiz %}
+                <a href="{% url 'my_hood' quiz.id %}" class="btn btn-outline-warning font-weight-bold btn-sm mb-2">VIEW QUESTIONS</a> 
+                {% elif not request.user.profile.question %}
+                <a href="{% url 'my_hood' quiz.id %}" class="btn join black font-weight-bold btn-sm">JOIN PANEL</a> 
+                {% endif %}
+                {%if quiz.admin == current_user%}
+                        <p class="ml-4 mt-5">
+                        <a href="{% url 'update_quiz' quiz.id %}"><i class="fas fa-edit"></i></a>
+                        </p>
+                {%endif%}
+            </div>
+        </div>
+
+    </div>
+    {% endfor %}
+</div>
+<footer class="pt-1 pb-1">
+    <div class="container">
+    <div class="">
+    <div class=" mt-2">
+        <p class="copyright text-center"><small>&copy; 2022 (c) Interview App All Rights Reserved.</small></p>
+    </div>
+    </div>
+    </div>
+
+</footer>
+{%endblock%}

@@ -32,7 +32,7 @@ class UpdateUserForm(forms.ModelForm):
 class UpdateUserProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['name', 'question','profile_pic', 'bio']
+        fields = [ 'bio']
         
         widgets = {
             'bio': Textarea(attrs={'cols': 20, 'rows': 5}),

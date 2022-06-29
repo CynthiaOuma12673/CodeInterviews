@@ -1,3 +1,4 @@
+from turtle import title
 from django.shortcuts import render, get_object_or_404,redirect
 from django.contrib.auth.models import User
 from django.http  import HttpResponseRedirect,Http404
@@ -81,3 +82,24 @@ def search_quiz(request):
 
     return render(request, 'all-quiz/search.html', {'quizs': quizs,'current_user':current_user})
 
+@login_required(login_url='login')
+def update_quiz(request,id):
+    title = 'UPDATE QUESTION'
+    instance= Question.objects.get(id=id)
+    if request.method=='POST':
+        form = QuestionForm(request.POST,request.FILES,instance=instance)
+        if form.is_valid():
+            form.save()
+        messages.success(request, ('Question Updated Successfullly'))
+        return redirect('quiz')
+    else:
+        form = QuestionForm(instance=instance)
+    return render(request,'all-quiz/new-quiz.html',{'form':form,'title':title})
+
+def user_profile(request, username):
+    current_user=request.user       
+    user_poster = get_object_or_404(User, username=username)
+    
+    if request.user == user_poster:
+        return redirect('profile', username=request.user.username)
+    return render(request, 'all-quiz/member.html', {'user_poster': user_poster,'current_user':current_user})

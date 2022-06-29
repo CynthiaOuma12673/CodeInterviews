@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %} 
+{{ block.super}}
+    <div class="container-fluid">
+        <h2 class="text-center mt-3 orange">My Questions</h2>
+        <div class="quiz-cont p-2 card mt-3" >
+            <div class="row">
+                <div class="col-md-4">
+                    <h4 class="card-title">{{quiz.name|title}}</h4>
+                        {%if quiz.admin == current_user%}
+                        <p class="ml-4">
+                            <a href="{% url 'update_quiz' quiz.id %}"><i class="fas fa-edit"></i></a>
+                        </p>
+                        {%endif%}
+                </div>
+                <div class="col-md-3">
+                    <p class="card-text">{{quiz.question}}</p>
+                    
+                </div>
+            </div>
+    
+        </div>
+    </div>
+
+    <footer class="pt-1 pb-1">
+        <div class="container">
+        <div class="">
+        <div class=" mt-2">
+            <p class="copyright text-center"><small>&copy; 2022 (c) Interview App All Rights Reserved.</small></p>
+        </div>
+        </div>
+        </div>
+    
+    </footer>
+{%endblock%}

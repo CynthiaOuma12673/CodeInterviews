@@ -8,4 +8,6 @@ urlpatterns=[
     path('profile/<username>/', views.profile, name='profile'),
     path('my_quiz/<id>', views.user, name='my_quiz'),
     path('search/', views.search_quiz, name='search'),
+    path('update_quiz/<id>/', views.update_quiz, name='update_quiz'),
+    path('user_profile/<username>/', views.user_profile, name='user_profile'),
 ]
